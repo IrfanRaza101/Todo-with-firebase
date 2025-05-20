@@ -31,6 +31,7 @@ export default function AddTodo({ userId }) {
       const localTodos = JSON.parse(localStorage.getItem(`todos_${userId}`) || '[]');
       localStorage.setItem(`todos_${userId}`, JSON.stringify([...localTodos, newTodo]));
       
+      // Clear input after successful save
       setTitle('');
     } catch (error) {
       console.error('Error adding todo:', error);
@@ -45,7 +46,8 @@ export default function AddTodo({ userId }) {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="✨ Add a new task..."
+            onKeyDown={(e) => e.key === 'Escape' && setTitle('')}
+            placeholder="Add a new task..."
             className="w-full px-4 py-3 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg 
             focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
             placeholder:text-gray-400 transition-all duration-200"
